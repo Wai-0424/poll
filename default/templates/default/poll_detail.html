@@ -8,7 +8,8 @@
         {% for opt in cbe %}
         <li><a href ='/poll/vote/{{ opt.id }}/'>{{ opt.title }}</a> - {{ opt.count }}票
          - {{ opt.count }}票
-            <a href="{% url 'option_edit' opt.id %">編輯</a>
+            <a href="{% url 'option_edit' opt.id %}">編輯</a>
+            <a href="{% url 'option_delete' opt.id %}">刪除</a>
         </li>
         {% endfor %}
     </ul>

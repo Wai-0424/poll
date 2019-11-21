@@ -5,6 +5,8 @@
         {%for poll in poll_list%}
         <li>{{ poll.created }} - <a href="/poll/{{ poll.id }}/">{{ poll.subject }}</a> 
         <a href='{{ poll.id }}/update/'>修改</a>
+        <a href='{% url 'poll_delete' poll.id %}'>刪除</a>
+        </li>
         {%endfor%}
     </ul>
 {% endblock %}
