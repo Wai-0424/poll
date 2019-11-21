@@ -1,6 +1,7 @@
 from django.shortcuts import render,render_to_response
 from django.views.generic import ListView,DetailView, RedirectView, CreateView, UpdateView
 from .models import *
+from django.urls import reverse
 
 def poll_list(req):
     polls = poll.objects.all()
@@ -32,3 +33,25 @@ class PollUpdate(UpdateView):
     model = poll
     fields = ['subject']
     success_url = '/poll/'
+class OptionCreate(CreateView):
+    model = Option
+    fields = ['title']
+    template_name = 'default/poll_form.html'
+    
+    def get_success_url(self):
+        #return '/poll/' + int(self.kwarges['zzz']) + '/'
+        #return '/poll/{}/'.format(self.kwargs['zzz'])
+        #return reverse('poll_view', kwargs={'pk': self.kwargs['zzz']})
+        return reverse('poll_view', args=[self.kwargs['zzz']])
+
+    def form_valid(self, form):
+        form.instance.poll_id = self.kwargs['zzz']
+        return super().form_valid(form)
+
+class OptionEdit(UpdateView):
+    modle = Option
+    fields = ['title']
+    template_name = 'default/poll_form.html'
+
+    def get_success_url(self):
+        return reverse('poll_view',args=[self.object.poll_id])
